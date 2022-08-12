@@ -123,8 +123,17 @@ function playerProperty(pName, pProperty) {
     const playerLst = [...Object.keys(obj.away.players),
     ...Object.keys(obj.home.players)];
     const found0 = playerLst.find(ply => ply === pName)
-    const teamHome = () => typeof obj.home.players[found0] === "object" ? `${pProperty} : ` + obj.home.players[found0][`${pProperty}`] + " points" : `${pProperty} : ` + obj.away.players[found0][`${pProperty}`]
-    console.log(teamHome())
+    // If Propert is stats return stats else return specified stat
+    pProperty === "stats"?(
+        typeof obj.home.players[found0] === "object" ?
+            console.log(obj.home.players[found0]) : (typeof obj.away.players[found0] === "object" ?
+                console.log(obj.away.players[found0]) :
+                console.log("Player not found")))
+    :(
+        console.log(typeof obj.home.players[found0] === "object" ? 
+        `${pProperty} : ` + obj.home.players[found0][`${pProperty}`] + " points" : 
+        `${pProperty} : ` + obj.away.players[found0][`${pProperty}`])
+        )
 }
 
 const numPointsScored = (pName) => playerProperty(pName, "points");
@@ -135,3 +144,7 @@ numPointsScored('Bismak Biyombo')
 const shoeSize = (pName) => playerProperty(pName, "shoe");
 
 shoeSize('Bismak Biyombo');
+
+const playerStats = (pName) => playerProperty(pName, "stats")
+
+playerStats("Brook Lopez")
