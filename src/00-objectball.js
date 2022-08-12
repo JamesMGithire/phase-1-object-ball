@@ -118,13 +118,20 @@ function gameObject() {
 }
 // End of gameObject(contains and returns a nested object)
 
-function numPointsScored(pName) {
+function playerProperty(pName, pProperty) {
     const obj = gameObject();
     const playerLst = [...Object.keys(obj.away.players),
     ...Object.keys(obj.home.players)];
     const found0 = playerLst.find(ply => ply === pName)
-    const teamHome = () => typeof obj.home.players[found0] === "object" ? obj.home.players[found0].points + " points" : obj.away.players[found0].points + " points"
+    const teamHome = () => typeof obj.home.players[found0] === "object" ? `${pProperty} : ` + obj.home.players[found0][`${pProperty}`] + " points" : `${pProperty} : ` + obj.away.players[found0][`${pProperty}`]
     console.log(teamHome())
 }
 
+const numPointsScored = (pName) => playerProperty(pName, "points");
+
+
 numPointsScored('Bismak Biyombo')
+
+const shoeSize = (pName) => playerProperty(pName, "shoe");
+
+shoeSize('Bismak Biyombo');
