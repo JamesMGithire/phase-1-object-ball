@@ -122,10 +122,9 @@ function numPointsScored(pName) {
     const obj = gameObject();
     const playerLst = [...Object.keys(obj.away.players),
     ...Object.keys(obj.home.players)];
-    console.log(playerLst);
     const found0 = playerLst.find(ply => ply === pName)
     const teamHome = () => typeof obj.home.players[found0] === "object" ? obj.home.players[found0].points + " points" : obj.away.players[found0].points + " points"
     console.log(teamHome())
 }
 
-numPointsScoredComplex('Bismak Biyombo')
+numPointsScored('Bismak Biyombo')
