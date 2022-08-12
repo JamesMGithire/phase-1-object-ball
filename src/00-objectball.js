@@ -123,7 +123,7 @@ function playerProperty(pName, pProperty) {
     const playerLst = [...Object.keys(obj.away.players),
     ...Object.keys(obj.home.players)];
     const found0 = playerLst.find(ply => ply === pName)
-    // If Property is stats return stats else return specified stat
+    // If Property is 'stats' return stats else return specified stat
     pProperty === "stats" ? (
         typeof obj.home.players[found0] === "object" ?
             console.log(obj.home.players[found0]) : (typeof obj.away.players[found0] === "object" ?
