@@ -118,49 +118,6 @@ function gameObject() {
 }
 // End of gameObject(contains and returns a nested object)
 
-function numPointsScoredComplex(pName) {
-    const obj = gameObject();
-    console.log(typeof obj);
-    const lvl1keys = Object.keys(obj)
-    if ((lvl1keys.find(() => lvl1keys === pName)) === pName) {
-        console.log(lvl1keys)
-    }
-    else {
-        console.log(lvl1keys)
-        console.log("Going deeper");
-        //want a list of 2nd lvl keys
-        let lvl2Keys = []
-        // populate lvl2Keys with obj.home keys and obj.away keys
-        for (i = 0; i < lvl1keys.length; i++) {
-            typeof obj[lvl1keys[i]] === 'object' ?
-                lvl2Keys.push(Object.keys(obj[lvl1keys[i]])) : console.log("Not an object")
-        }
-        // Use reduce in next test
-        // lvl2Keys = lvl1keys.map(inx => (obj[lvl1keys[inx]]));
-
-        console.log(lvl2Keys)
-        let lvl3Keys = []
-        //Check if an item is an object in the 2nd lvl
-        for (let i = 0; i < lvl2Keys.length; i++) {
-            if (pName === Object.keys(obj[lvl1keys[i]])) {
-                console.log("found")
-            }
-            else {
-                console.log("This is lvl3 index " + i)
-                // just more iteration
-                for (let j = 0; j < lvl2Keys[i].length; j++) {
-                    // function to return points
-                    function retPoints(indp) {
-                        console.log(obj[lvl1keys[i]][lvl2Keys[i][j]][indp].points + " points.")
-                    }
-                    const found = () => Object.keys(obj[lvl1keys[i]][lvl2Keys[i][j]]).find((indz) => indz === pName ? retPoints(indz) : false);
-                    found()
-                }
-            }
-        }
-    }
-}
-
 function numPointsScored(pName) {
     const obj = gameObject();
     const playerLst = [...Object.keys(obj.away.players),
