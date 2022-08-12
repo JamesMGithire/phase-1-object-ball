@@ -2,7 +2,7 @@ function gameObject() {
     const someObj = {
         home: {
             teamName: "Brookyln Nets",
-            colors: ["Blacak", "White"],
+            colors: ["Black", "White"],
             players: {
                 "Alan Anderson": {
                     number: "0",
@@ -123,28 +123,75 @@ function playerProperty(pName, pProperty) {
     const playerLst = [...Object.keys(obj.away.players),
     ...Object.keys(obj.home.players)];
     const found0 = playerLst.find(ply => ply === pName)
-    // If Propert is stats return stats else return specified stat
-    pProperty === "stats"?(
+    // If Property is stats return stats else return specified stat
+    pProperty === "stats" ? (
         typeof obj.home.players[found0] === "object" ?
             console.log(obj.home.players[found0]) : (typeof obj.away.players[found0] === "object" ?
                 console.log(obj.away.players[found0]) :
                 console.log("Player not found")))
-    :(
-        console.log(typeof obj.home.players[found0] === "object" ? 
-        `${pProperty} : ` + obj.home.players[found0][`${pProperty}`] + " points" : 
-        `${pProperty} : ` + obj.away.players[found0][`${pProperty}`])
-        )
+        : (console.log(
+            typeof obj.home.players[found0] === "object" ?
+                `${pProperty} : ` + obj.home.players[found0][`${pProperty}`] + " points" : (typeof obj.away.players[found0] === "object" ?
+                    `${pProperty} : ` + obj.away.players[found0][`${pProperty}`]
+                    : "Player Not Found")))
 }
 
 const numPointsScored = (pName) => playerProperty(pName, "points");
-
-
 numPointsScored('Bismak Biyombo')
 
 const shoeSize = (pName) => playerProperty(pName, "shoe");
-
 shoeSize('Bismak Biyombo');
 
-const playerStats = (pName) => playerProperty(pName, "stats")
+function teamProperty(teamN, teamP) {
+    const obj = gameObject();
+    const found0 = [obj.away.teamName, obj.home.teamName].find(team => team === teamN);
 
-playerStats("Brook Lopez")
+    teamP === "teamNames" ? console.log([
+        obj.home.teamName === found0 ?
+            obj.home["teamName"] : (obj.away.teamName === found0 ? obj.away["teamName"] : "Team Not Found")
+    ])
+        : (teamP === "playerNumbers" ?
+            console.log(obj.home.teamName === teamN ?
+                Object.keys(obj.home.players).map((plyr) => obj.home.players[plyr].number)
+                : Object.keys(obj.away.players).map((plyr) => obj.away.players[plyr].number))
+
+            : (console.log(obj.home.teamName === found0 ?
+                obj.home[teamP]
+                : (obj.away.teamName === found0 ? obj.away[teamP]
+                    : "Team Not Found"))))
+
+}
+
+const teamColors = tName => teamProperty(tName, "colors");
+teamColors("Brookyln Nets");
+
+const teamNames = tName => teamProperty(tName, "teamNames");
+teamNames("Brookyln Nets");
+
+const playerNumbers = tName => teamProperty(tName, "playerNumbers");
+playerNumbers("Brookyln Nets")
+
+const playerStats = (pName) => playerProperty(pName, "stats")
+playerStats("DeSagna Diop")
+
+// Find player with largest shoesize and give rebounds
+function bigShoeRebounds(){
+    const obj = gameObject();
+    let shoeP = [...Object.keys(obj.home.players).map((plyr) => obj.home.players[plyr].shoe),
+    ...Object.keys(obj.away.players).map((plyr) => obj.away.players[plyr].shoe)];
+    let shoePInt = shoeP.map((indx) => parseInt(indx));
+    const largestS = Math.max(...shoePInt);
+    const foundH = [...Object.keys(obj.home.players).filter((plyr) => obj.home.players[plyr].shoe === `${largestS}`),
+    ...Object.keys(obj.away.players).filter((plyr) => obj.away.players[plyr].shoe === `${largestS}`)];
+    let pointsLst = []
+    foundH.forEach((i) => {
+        typeof obj.home.players[i] != 'undefined' ?
+            pointsLst.push(obj.home.players[i].rebounds)
+            : (typeof obj.away.players[i].rebounds != 'undefined' ?
+                pointsLst.push(obj.away.players[i].rebounds)
+                : null)
+    })
+    console.log(pointsLst)
+}
+
+bigShoeRebounds();
